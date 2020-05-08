@@ -5,6 +5,7 @@
 
 pub mod metadata;
 pub mod startup;
+pub mod platform_info;
 
 use crate::session::{self, Session, Task};
 
@@ -28,7 +29,6 @@ impl Request for () {
 }
 
 impl Response for () {
-
     const RDF_NAME: Option<&'static str> = None;
 
     type Proto = ();
@@ -51,6 +51,7 @@ where
     match action {
         "SendStartupInfo" => task.execute(self::startup::handle),
         "GetClientInfo" => task.execute(self::metadata::handle),
+        "GetPlatformInfo" => task.execute(self::platform_info::handle),
         action => return Err(session::Error::Dispatch(String::from(action))),
     }
 }
